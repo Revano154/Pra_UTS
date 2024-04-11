@@ -1,4 +1,5 @@
 const joi = require('joi');
+const { updateUserPassword } = require('./users-controller');
 
 module.exports = {
   createUser: {
@@ -17,16 +18,11 @@ module.exports = {
     },
   },
 
-  changePassword: {
+  updateUserPassword: {
     body: {
-      email: joi.string().email().required().label('Email'),
-      oldPassword: joi.string().min(6).required().label('Old Password'),
-      newPassword: joi.string().min(6).required().label('New Password'),
-      confirmPassword: joi
-        .string()
-        .required()
-        .label('Confirm Password')
-        .messages({ 'any.only': 'Passwords do not match' }),
+      password: joi.string().min(6).max(32).required().label('Password'),
+      newPassword: joi.string().min(6).max(32).required().label('Password'),
+      confirmPassword: joi.string().min(6).max(32).required().label('Password'),
     },
   },
 };
